@@ -29,7 +29,7 @@ class DownloaderSpider(scrapy.Spider):
 
         print "**** response from = ", response.url
         print "**** using serie = ", seriedata["name"]
-        print "**** searching for season = ", seriedata["season"], " chapter = ", seriedata["chapter"]
+        print "**** searching for season = ", seriedata["season"], " chapter = ", seriedata["chapter"] + 1
 
         nchapter = seriedata["chapter"]
         nchapter += 1
