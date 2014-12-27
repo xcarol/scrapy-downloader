@@ -18,14 +18,20 @@ class DownloaderSpider(scrapy.Spider):
             self.series_data = json.load(file)
             file.close()
 
-        print("*** url *** = ", self.series_data["url"])
-        self.start_urls = [self.series_data["url"]]
+        for serie in self.series_data:
+            self.start_urls.append(serie["url"])
+            print "*** added url = ", serie["url"]
 
     def parse(self, response):
 
-        print("**** response **** = ", response)
+        nserie = self.start_urls.index(response.url)
+        seriedata = self.series_data[nserie]
 
-        nchapter = self.series_data["chapter"]
+        print "**** response from = ", response.url
+        print "**** using serie = ", seriedata["name"]
+        print "**** searching for season = ", seriedata["season"], " chapter = ", seriedata["chapter"]
+
+        nchapter = seriedata["chapter"]
         nchapter += 1
 
         schapter = ''
@@ -34,23 +40,23 @@ class DownloaderSpider(scrapy.Spider):
         schapter += str(nchapter)
 
         found = False
-        for sel in response.xpath(self.series_data["xpath"]):
+        for sel in response.xpath(seriedata["xpath"]):
 
-            if (len(self.series_data["xpath_title"]) > 0):
+            if (len(seriedata["xpath_title"]) > 0):
 
-                smask = self.series_data["title_mask"]
+                smask = seriedata["title_mask"]
                 smask = smask.replace("#2", schapter)
-                smask = smask.replace('#1', self.series_data["season"])
+                smask = smask.replace('#1', str(seriedata["season"]))
 
-                title = sel.xpath(self.series_data["xpath_title"]).extract()
+                title = sel.xpath(seriedata["xpath_title"]).extract()
                 if (len(title) == 0 or title[0].find(smask) == -1):
                     continue
 
-            smask = self.series_data["link_mask"]
+            smask = seriedata["link_mask"]
             smask = smask.replace("#2", schapter)
-            smask = smask.replace('#1', self.series_data["season"])
+            smask = smask.replace('#1', str(seriedata["season"]))
 
-            link = sel.xpath(self.series_data["xpath_link"]).extract()
+            link = sel.xpath(seriedata["xpath_link"]).extract()
             if (len(link) == 0 or (len(smask) > 0 and link[0].find(smask) == -1)):
                 continue
 
@@ -59,9 +65,8 @@ class DownloaderSpider(scrapy.Spider):
             found = True
 
         if (found):
-            self.series_data['chapter'] = nchapter
+            seriedata['chapter'] = nchapter
             with open(self.jsonfile, 'wt') as file:
                 json.dump(self.series_data, file)
                 file.close()
-
 
