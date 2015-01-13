@@ -4,6 +4,10 @@ import os
 import json
 import logging
 
+#Serie name in json series file MUST match directory in filesystem 
+dwnldir = "/home/xavi/Movies/"
+seriesdir = "/home/xavi/Series/"
+
 # https://github.com/tranqil/utwhisper
 
 class DownloaderSpider(scrapy.Spider):
@@ -15,15 +19,19 @@ class DownloaderSpider(scrapy.Spider):
         super(DownloaderSpider, self).__init__(*args, **kwargs)
 
         if (os.path.isfile('series.log')):
-             statinfo = os.stat('series.log')
-             if (statinfo.st_size > 10000000):
-                 os.remove('series.log')
+            statinfo = os.stat('series.log')
+            if (statinfo.st_size > 10000000):
+                os.remove('series.log')
+
+        if (os.path.isfile('authreuse')):
+            os.remove("authreuse")
 
         FORMAT = '%(asctime)-15s %(message)s'
         logging.basicConfig(filename='series.log',level=logging.DEBUG,format=FORMAT)
-        logging.debug("*****")
-        logging.debug("*****")
-        logging.debug("*****")
+        logging.debug("")
+        logging.debug("**")
+        logging.debug("****")
+        logging.debug("******")
 
         self.jsonfile = series
         with open(self.jsonfile, 'rwt') as file:
@@ -39,8 +47,15 @@ class DownloaderSpider(scrapy.Spider):
 
         logging.debug("**** response from = %s", response.url)
 
-        nserie = self.start_urls.index(response.url)
-        seriedata = self.series_data[nserie]
+        seriedata = []
+        for serie in self.series_data:
+            print(serie["url"])
+            if (serie["url"] == response.url):
+                seriedata = serie
+                break
+
+        if not seriedata:
+            return
 
         logging.debug("**** using serie = %s", seriedata["name"])
 
@@ -88,4 +103,40 @@ class DownloaderSpider(scrapy.Spider):
             with open(self.jsonfile, 'wt') as file:
                 json.dump(self.series_data, file)
                 file.close()
+
+        if ('file_mask' in seriedata):
+            file_mask = seriedata['file_mask']
+            for nnchapter in range(1, nchapter):
+                
+                file_to_move = ""
+
+                sschapter = ''
+                if (nnchapter < 10):
+                    sschapter = '0'
+                sschapter += str(nnchapter)
+
+                file_mask = dwnldir + seriedata['file_mask']
+                file_mask = file_mask.replace("#2", sschapter)
+                file_mask = file_mask.replace('#1', str(seriedata["season"]))
+
+                logging.debug("Searching for %s", file_mask)
+
+                if (os.path.isdir(file_mask)):
+                    for filename in os.listdir(file_mask):
+                        logging.debug("Found %s", filename)
+                        if (".avi" in filename):
+                            logging.debug("Found video %s", filename)
+                            file_to_move = file_mask + "/" + filename
+                            break
+                elif (os.path.isfile(file_mask)):
+                    file_to_move = file_mask
+
+                if (len(file_to_move) > 0):
+                    src = file_to_move
+                    dst = seriesdir + seriedata['name'] + "/Season " + str(seriedata["season"]) + "/" + seriedata['name'] + "-" + str(seriedata["season"]) + sschapter + ".avi"
+                    try:
+                        os.rename(src, dst)
+                        logging.debug("Moved %s to %s", src, dst)
+                    except OSError:
+                        logging.debug("Cannot move %s to %s. Errno = %d", src, dst, os.strerror(errno.errcode))
 
