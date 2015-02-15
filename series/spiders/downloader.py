@@ -72,7 +72,7 @@ class DownloaderSpider(scrapy.Spider):
         found = False
         for sel in response.xpath(seriedata["xpath"]):
 
-            if (len(seriedata["xpath_title"]) > 0):
+            if ('xpath_title' in seriedata and len(seriedata["xpath_title"]) > 0):
 
                 smask = seriedata["title_mask"]
                 smask = smask.replace("#2", schapter)
@@ -89,8 +89,12 @@ class DownloaderSpider(scrapy.Spider):
             smask = smask.replace('#1', str(seriedata["season"]))
 
             link = sel.xpath(seriedata["xpath_link"]).extract()
+
             if (len(link) == 0 or (len(smask) > 0 and link[0].find(smask) == -1)):
                 continue
+
+            if ('link_prefix' in seriedata and len(seriedata["link_prefix"]) > 0):
+                link[0] = seriedata["link_prefix"] + link[0]
 
             logging.debug("****** link = %s", link)
 
