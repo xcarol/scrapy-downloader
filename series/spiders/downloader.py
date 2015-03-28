@@ -108,7 +108,7 @@ class DownloaderSpider(scrapy.Spider):
                 json.dump(self.series_data, file)
                 file.close()
 
-        if ('file_mask' in seriedata):
+        if ('file_mask' in seriedata and strlen(file_mask) > 0):
             file_mask = seriedata['file_mask']
             for nnchapter in range(1, nchapter):
                 
