@@ -3,3 +3,4 @@ authreuse
 *~
 *.pyc
 series.log
+.idea/
