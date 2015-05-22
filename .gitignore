@@ -4,3 +4,5 @@ authreuse
 *.pyc
 series.log
 .idea/
+bower_components/
+node_modules/
