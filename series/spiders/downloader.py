@@ -3,6 +3,7 @@ import scrapy
 import os
 import json
 import logging
+import glob
 
 #Serie name in json series file MUST match directory in filesystem 
 dwnldir = "/home/xavi/Movies/"
@@ -108,7 +109,7 @@ class DownloaderSpider(scrapy.Spider):
                 json.dump(self.series_data, file)
                 file.close()
 
-        if ('file_mask' in seriedata and strlen(file_mask) > 0):
+        if ('file_mask' in seriedata and len(seriedata['file_mask']) > 0):
             file_mask = seriedata['file_mask']
             for nnchapter in range(1, nchapter):
                 
@@ -119,28 +120,32 @@ class DownloaderSpider(scrapy.Spider):
                     sschapter = '0'
                 sschapter += str(nnchapter)
 
-                file_mask = dwnldir + seriedata['file_mask']
+                file_mask = dwnldir + "*" + seriedata['file_mask'] + "*"
                 file_mask = file_mask.replace("#2", sschapter)
                 file_mask = file_mask.replace('#1', str(seriedata["season"]))
 
-                logging.debug("Searching for %s", file_mask)
+                logging.debug("Searching for file_mask %s", file_mask)
 
-                if (os.path.isdir(file_mask)):
-                    for filename in os.listdir(file_mask):
-                        logging.debug("Found %s", filename)
-                        if (".avi" in filename):
-                            logging.debug("Found video %s", filename)
-                            file_to_move = file_mask + "/" + filename
-                            break
-                elif (os.path.isfile(file_mask)):
-                    file_to_move = file_mask
+                for globfile in glob.glob(file_mask):
+                    if (os.path.isdir(globfile)):
+                        for filename in os.listdir(globfile):
+                            logging.debug("Found %s", filename)
+                            if (".avi" in filename):
+                                logging.debug("Found video %s", filename)
+                                file_to_move = globfile + "/" + filename
+                                break
+                    elif (os.path.isfile(globfile)):
+                        file_to_move = globfile
 
                 if (len(file_to_move) > 0):
                     src = file_to_move
                     dst = seriesdir + seriedata['name'] + "/Season " + str(seriedata["season"]) + "/" + seriedata['name'] + "-" + str(seriedata["season"]) + sschapter + ".avi"
-                    try:
-                        os.rename(src, dst)
-                        logging.debug("Moved %s to %s", src, dst)
-                    except OSError:
-                        logging.debug("Cannot move %s to %s. Errno = %d", src, dst, os.strerror(errno.errcode))
+                    if (os.path.isfile(dst)):
+                        logging.debug("Cannot move %s to %s. Destination already exists", src, dst)
+                    else:
+                        try:
+                            os.rename(src, dst)
+                            logging.debug("Moved %s to %s", src, dst)
+                        except OSError:
+                            logging.debug("Cannot move %s to %s. Errno = %d", src, dst, os.strerror(errno.errcode))
 
