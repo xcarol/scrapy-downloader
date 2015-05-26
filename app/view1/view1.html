@@ -1,1 +1,31 @@
 <p>This is the partial for view 1.</p>
+<table border="1">
+    <thead><tr>
+        <td>Name</td>
+        <td>Season</td>
+        <td>Chapter</td>
+        <td>Enabled</td>
+        <td>Url</td>
+        <td>xpath</td>
+        <td>xpath_link</td>
+        <td>xpath_title</td>
+        <td>link_prefix</td>
+        <td>link_mask</td>
+        <td>file_mask</td>
+        <td>title_mask</td>
+    </tr></thead>
+    <tr ng-repeat="serie in series">
+        <td ng-click="gotoEdit(serie)">{{serie.name}}</td>
+        <td>{{serie.season}}</td>
+        <td>{{serie.chapter}}</td>
+        <td>{{serie.enabled}}</td>
+        <td>{{serie.url | limitTo:20}}</td>
+        <td>{{serie.xpath}}</td>
+        <td>{{serie.xpath_link}}</td>
+        <td>{{serie.xpath_title}}</td>
+        <td>{{serie.link_prefix}}</td>
+        <td>{{serie.link_mask}}</td>
+        <td>{{serie.file_mask}}</td>
+        <td>{{serie.title_mask}}</td>
+    </tr>
+</table>
