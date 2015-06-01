@@ -7,9 +7,15 @@
   "private": true,
   "dependencies": {
     "angular": "1.2.x",
+    "angular-motion": "x.x.x",
     "angular-route": "1.2.x",
     "angular-loader": "1.2.x",
     "angular-mocks": "~1.2.x",
+    "angular-strap": "x.x.x",
+    "bootstrap": "x.x.x",
     "html5-boilerplate": "~4.3.0"
+  },
+  "resolutions": {
+    "angular": "1.4.0"
   }
 }
