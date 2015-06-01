@@ -1,31 +1,64 @@
-<p>This is the partial for view 1.</p>
-<table border="1">
-    <thead><tr>
-        <td>Name</td>
-        <td>Season</td>
-        <td>Chapter</td>
-        <td>Enabled</td>
-        <td>Url</td>
-        <td>xpath</td>
-        <td>xpath_link</td>
-        <td>xpath_title</td>
-        <td>link_prefix</td>
-        <td>link_mask</td>
-        <td>file_mask</td>
-        <td>title_mask</td>
-    </tr></thead>
-    <tr ng-repeat="serie in series">
-        <td ng-click="gotoEdit(serie)">{{serie.name}}</td>
+<table>
+    <h1 align="center">Scrcapy Downloader Series</h1>
+
+    <hr>
+    <div ng-repeat-start="serie in series"></div>
+    <table width="80%" align="center" border="1" class="table">
+        <tr>
+        <td width="200">
+
+
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-success">Edit</button>
+                <button>Delete</button></td>
+            </div>
+
+        <td ng-style="">{{serie.name}}</td>
+        </tr>
+        <tr>
+        <td width="100">Season</td>
         <td>{{serie.season}}</td>
+        </tr>
+        <tr>
+        <td width="100">Chapter</td>
         <td>{{serie.chapter}}</td>
+        </tr>
+        <tr>
+        <td width="100">Enabled</td>
         <td>{{serie.enabled}}</td>
-        <td>{{serie.url | limitTo:20}}</td>
+        </tr>
+        <tr>
+        <td width="100">Url</td>
+        <td>{{serie.url}}</td>
+        </tr>
+        <tr>
+        <td width="100">xpath</td>
         <td>{{serie.xpath}}</td>
+        </tr>
+        <tr>
+        <td width="100">xpath_link</td>
         <td>{{serie.xpath_link}}</td>
+        </tr>
+        <tr>
+        <td width="100">xpath_title</td>
         <td>{{serie.xpath_title}}</td>
+        </tr>
+        <tr>
+        <td width="100">link_prefix</td>
         <td>{{serie.link_prefix}}</td>
+        </tr>
+        <tr>
+        <td width="100">link_mask</td>
         <td>{{serie.link_mask}}</td>
+        </tr>
+        <tr>
+        <td width="100">file_mask</td>
         <td>{{serie.file_mask}}</td>
+        </tr>
+        <tr>
+        <td width="100">title_mask</td>
         <td>{{serie.title_mask}}</td>
-    </tr>
+        </tr>
+    </table>
+    <div ng-repeat-end><br><br></div>
 </table>
