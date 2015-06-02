@@ -6,13 +6,14 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "angular": "1.2.x",
-    "angular-motion": "x.x.x",
-    "angular-route": "1.2.x",
-    "angular-loader": "1.2.x",
-    "angular-mocks": "~1.2.x",
-    "angular-strap": "x.x.x",
-    "bootstrap": "x.x.x",
+    "angular": "1.4.x",
+    "angular-route": "1.4.x",
+    "angular-loader": "1.4.x",
+    "angular-mocks": "1.4.x",
+    "angular-animate": "1.4.x",
+    "angular-motion": "0.x.x",
+    "angular-strap": "2.2.x",
+    "bootstrap": "3.3.x",
     "html5-boilerplate": "~4.3.0"
   },
   "resolutions": {
