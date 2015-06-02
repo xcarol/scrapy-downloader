@@ -1,62 +1,60 @@
 <table>
-    <h1 align="center">Scrcapy Downloader Series</h1>
+    <h1 align="center">Scrapy Downloader Series</h1>
 
     <hr>
     <div ng-repeat-start="serie in series"></div>
-    <table width="80%" align="center" border="1" class="table">
+    <table class="table table-bordered">
         <tr>
         <td width="200">
-
-
             <div class="btn-group" role="group">
-                <button type="button" class="btn btn-success">Edit</button>
-                <button>Delete</button></td>
+                <button type="button" class="btn btn-success" ng-click="">Edit</button>
+                <button type="button" class="btn btn-danger" ng-click="confirmDelete(serie)">Delete</button>
             </div>
-
-        <td ng-style="">{{serie.name}}</td>
+        </td>
+        <td valign="center"><h4>{{serie.name}}</h4></td>
         </tr>
         <tr>
-        <td width="100">Season</td>
+        <td>Season</td>
         <td>{{serie.season}}</td>
         </tr>
         <tr>
-        <td width="100">Chapter</td>
+        <td>Chapter</td>
         <td>{{serie.chapter}}</td>
         </tr>
         <tr>
-        <td width="100">Enabled</td>
+        <td>Enabled</td>
         <td>{{serie.enabled}}</td>
         </tr>
         <tr>
-        <td width="100">Url</td>
-        <td>{{serie.url}}</td>
+        <td>Url</td>
+        <td><a href="{{serie.url}}" target="_blank">{{serie.url}}</a></td>
         </tr>
         <tr>
-        <td width="100">xpath</td>
+        <td>xpath</td>
         <td>{{serie.xpath}}</td>
         </tr>
         <tr>
-        <td width="100">xpath_link</td>
+        <td>xpath_link</td>
         <td>{{serie.xpath_link}}</td>
         </tr>
         <tr>
-        <td width="100">xpath_title</td>
+        <td>xpath_title</td>
         <td>{{serie.xpath_title}}</td>
         </tr>
         <tr>
-        <td width="100">link_prefix</td>
+        <td>link_prefix</td>
         <td>{{serie.link_prefix}}</td>
         </tr>
         <tr>
-        <td width="100">link_mask</td>
+        <td>link_mask</td>
         <td>{{serie.link_mask}}</td>
         </tr>
         <tr>
-        <td width="100">file_mask</td>
+        <td>file_mask</td>
         <td>{{serie.file_mask}}</td>
         </tr>
         <tr>
-        <td width="100">title_mask</td>
+        <td>title_mask</td>
         <td>{{serie.title_mask}}</td>
         </tr>
     </table>

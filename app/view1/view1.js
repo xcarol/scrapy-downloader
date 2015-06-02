@@ -20,11 +20,15 @@ angular.module('myApp.view1', ['ngRoute',
 
         $log.debug('View1Ctrl called...');
         $log.debug('$scope.series = ' + $scope.series);
-/*
-        var myOtherModal = $modal({scope: $scope, template: 'modal/docs/modal.demo.tpl.html', show: false});
-        // Show when some event occurs (use $promise property to ensure the template has been loaded)
-        $scope.showModal = function() {
-            myOtherModal.$promise.then(myOtherModal.show);
+
+        $scope.confirmDelete = function(serie) {
+            var modal1 = $modal({scope: $scope, template: 'templates/modal-yesno-tmpl.html',
+                title: 'Delete '+serie.name+'?', content:'Do you really want to delete '+serie.name+' serie?',
+                show: false});
+            modal1.$promise.then(modal1.show);
         };
-*/
+
+        $scope.$on('modal.hide' , function() {
+            $log.debug('ggggggggg');
+        });
     }]);
