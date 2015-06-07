@@ -24,11 +24,20 @@ angular.module('myApp.view1', ['ngRoute',
         $scope.confirmDelete = function(serie) {
             var modal1 = $modal({scope: $scope, template: 'templates/modal-yesno-tmpl.html',
                 title: 'Delete '+serie.name+'?', content:'Do you really want to delete '+serie.name+' serie?',
-                show: false});
+                show: false, prefixEvent: 'confirmDelete', serie: serie});
             modal1.$promise.then(modal1.show);
         };
 
-        $scope.$on('modal.hide' , function() {
-            $log.debug('ggggggggg');
+        $scope.$on('confirmDelete.hide' , function(element, modal1) {
+            if(element.targetScope.deleteit == true) {
+                var idx = $scope.series.indexOf(modal1.$options.serie);
+                $scope.series.splice(idx, 1);
+
+                $http.put('../series.json', $scope.series).success(function(data, status, headers, config) {
+                    $log.debug('status: ' + status);
+                }).error(function(data, status, headers, config) {
+                    $modal({title: 'Error', content: 'Status: '+status+' while saving data to server...', show: true});
+                });
+            }
         });
     }]);
