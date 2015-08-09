@@ -6,8 +6,8 @@ import logging
 import glob
 
 #Serie name in json series file MUST match directory in filesystem 
-dwnldir = "/home/xavi/Movies/"
-seriesdir = "/home/xavi/Series/"
+dwnldir = "/home/kodi/Movies/"
+seriesdir = "/home/kodi/Series/"
 
 # https://github.com/tranqil/utwhisper
 
