@@ -59,7 +59,7 @@ class DownloaderSpider(scrapy.Spider):
         if not seriedata:
             return
 
-        logging.debug("**** serie selected for processing %", seriedata["name"])
+        logging.debug("**** serie selected for processing %s", seriedata["name"])
 
         nchapter = seriedata["chapter"]
         nchapter += 1
