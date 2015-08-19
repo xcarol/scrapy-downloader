@@ -1,19 +1,25 @@
 var express = require('express');
 var fs = require('fs');
 var app = express();
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
-    var html = fs.readFileSync('app/index.html');
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.end(html);
+    res.sendFile('index.html', { root: __dirname + '/' });
 });
 
-app.get('/?*', function (req, res) {
-    res.send('/?*');
+app.get('/series.json', function (req, res) {
+    res.sendFile('series.json', { root: __dirname + '/../' });
 });
 
-app.post('/*', function(req, res){
-    var html = fs.writeFileSync('/*', req.body);
+app.get('/*', function (req, res) {
+    console.log('params length: '+req.originalUrl);
+    res.sendFile(req.originalUrl, { root: __dirname + '/'});
+});
+
+app.put('/series.json', function(req, res){
+    var html = fs.writeFileSync('series.json', JSON.stringify(req.body));
     res.writeHead(200, {'Content-Type': 'text/html'});
     res.end('thanks');
 });

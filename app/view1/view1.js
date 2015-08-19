@@ -21,6 +21,10 @@ angular.module('myApp.view1', ['ngRoute',
         $log.debug('View1Ctrl called...');
         $log.debug('$scope.series = ' + $scope.series);
 
+        $scope.serieVisible = null;
+        $scope.editSeason = false;
+        $scope.editChapter = false;
+
         $scope.confirmDelete = function(serie) {
             var modal1 = $modal({scope: $scope, template: 'templates/modal-yesno-tmpl.html',
                 title: 'Delete '+serie.name+'?', content:'Do you really want to delete '+serie.name+' serie?',
@@ -33,11 +37,15 @@ angular.module('myApp.view1', ['ngRoute',
                 var idx = $scope.series.indexOf(modal1.$options.serie);
                 $scope.series.splice(idx, 1);
 
-                $http.put('../series.json', $scope.series).success(function(data, status, headers, config) {
+                $http.put('series.json', $scope.series).success(function(data, status, headers, config) {
                     $log.debug('status: ' + status);
                 }).error(function(data, status, headers, config) {
                     $modal({title: 'Error', content: 'Status: '+status+' while saving data to server...', show: true});
                 });
             }
         });
+
+        $scope.showDetails = function(serie) {
+            $scope.serieVisible = serie;
+        }
     }]);
