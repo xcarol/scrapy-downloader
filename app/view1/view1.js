@@ -52,6 +52,13 @@ angular.module('myApp.view1', ['ngRoute',
 
         $scope.showDetails = function(serie) {
             $scope.serieVisible = serie;
+/*
+            if ($scope.serieVisible != null) {
+                serie.style = {position: 'absolute', top:'0px'};
+            } else {
+                serie.style = {position: 'relative', top:'auto'};
+            }
+*/
         };
 
         $scope.showEdit = function(serie, field) {
