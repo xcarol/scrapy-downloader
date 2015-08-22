@@ -8,6 +8,7 @@ import glob
 #Serie name in json series file MUST match directory in filesystem 
 dwnldir = "/home/kodi/Movies/"
 seriesdir = "/home/kodi/Series/"
+logger = logging.getLogger('downloader')
 
 # https://github.com/tranqil/utwhisper
 
@@ -27,7 +28,6 @@ class DownloaderSpider(scrapy.Spider):
         if (os.path.isfile('authreuse')):
             os.remove("authreuse")
 
-        logger = logging.getLogger('downloader')
         logger.debug("**********************************")
         logger.debug("***** DownloaderSpider Start *****")
         logger.debug("**********************************")
