@@ -22,8 +22,17 @@ angular.module('myApp.view1', ['ngRoute',
         $log.debug('$scope.series = ' + $scope.series);
 
         $scope.serieVisible = null;
-        $scope.editSeason = false;
-        $scope.editChapter = false;
+        $scope.editSerie = null;
+        $scope.editSerieCopy = {};
+        $scope.editField = [];
+
+        function saveSeries() {
+            $http.put('series.json', $scope.series).success(function(data, status, headers, config) {
+                $log.debug('status: ' + status);
+            }).error(function(data, status, headers, config) {
+                $modal({title: 'Error', content: 'Status: '+status+' while saving data to server...', show: true});
+            });
+        }
 
         $scope.confirmDelete = function(serie) {
             var modal1 = $modal({scope: $scope, template: 'templates/modal-yesno-tmpl.html',
@@ -32,20 +41,36 @@ angular.module('myApp.view1', ['ngRoute',
             modal1.$promise.then(modal1.show);
         };
 
-        $scope.$on('confirmDelete.hide' , function(element, modal1) {
+        $scope.$on('confirmDelete.hide' , function(element, modal) {
             if(element.targetScope.deleteit == true) {
-                var idx = $scope.series.indexOf(modal1.$options.serie);
+                var idx = $scope.series.indexOf(modal.$options.serie);
                 $scope.series.splice(idx, 1);
 
-                $http.put('series.json', $scope.series).success(function(data, status, headers, config) {
-                    $log.debug('status: ' + status);
-                }).error(function(data, status, headers, config) {
-                    $modal({title: 'Error', content: 'Status: '+status+' while saving data to server...', show: true});
-                });
+                saveSeries();
             }
         });
 
         $scope.showDetails = function(serie) {
             $scope.serieVisible = serie;
+        };
+
+        $scope.showEdit = function(serie, field) {
+            $scope.editSerie = serie;
+            angular.copy(serie, $scope.editSerieCopy);
+            $scope.editField[serie.name+field] = true;
+        };
+
+        $scope.processKey = function(event, field) {
+            if (event.keyCode == 27) {
+                angular.copy($scope.editSerieCopy, $scope.editSerie);
+                $scope.editField[$scope.editSerie.name+field] = false;
+            } else if (event.keyCode == 13) {
+                saveSeries();
+                $scope.editField[$scope.editSerie.name+field] = false;
+            }
+        };
+
+        $scope.saveSerie = function() {
+            saveSeries();
         }
     }]);

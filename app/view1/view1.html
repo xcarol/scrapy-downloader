@@ -19,50 +19,82 @@
             <tr>
             <td>Season</td>
             <td>
-                <div ng-style="{width: '100%'}" ng-hide="editSeason" ng-click="editSeason = true">{{serie.season}}</div>
+                <div ng-hide="editField[serie.name+'season']" ng-style="{width: '100%'}" ng-click="showEdit(serie, 'season')">{{serie.season}}</div>
+                <div ng-show="editField[serie.name+'season']"><input id = "serie.name+'season_edit'" type="text" ng-model="serie.season" ng-keyup="processKey($event, 'season')"/></div>
             </td>
             </tr>
             <tr>
             <td>Chapter</td>
             <td>
-                <div ng-style="{width: '100%'}" ng-hide="editChapter" ng-click="editChapter = true">{{serie.chapter}}</div>
+                <div ng-hide="editField[serie.name+'chapter']" ng-style="{width: '100%'}" ng-click="showEdit(serie, 'chapter')">{{serie.chapter}}</div>
+                <div ng-show="editField[serie.name+'chapter']"><input id = "serie.name+'chapter_edit'" type="text" ng-model="serie.chapter" ng-keyup="processKey($event, 'chapter')"/></div>
             </td>
             </tr>
             <tr>
-            <td>Enabled</td>
-            <td>{{serie.enabled}}</td>
+            <td>Enabled</t>
+                <td>
+<!--
+                <div ng-hide="editField[serie.name+'enabled']" ng-style="{width: '100%'}" ng-click="showEdit(serie, 'enabled')">{{serie.enabled}}</div>
+-->
+                <div><input id = "serie.name+'enabled_edit'" type="checkbox" ng-model="serie.enabled" ng-change="saveSerie();"/></div>
+                </td>
+            </td>
             </tr>
             <tr>
             <td>Url</td>
-            <td><a href="{{serie.url}}" target="_blank">{{serie.url}}</a></td>
+                <td>
+                <div ng-hide="editField[serie.name+'url']" ng-style="{width: '100%'}" ng-click="showEdit(serie, 'url')">{{serie.url}}</div>
+                <div ng-show="editField[serie.name+'url']"><input id = "serie.name+'url_edit'" type="text" ng-model="serie.url" ng-keyup="processKey($event, 'url')"/></div>
+                </td>
             </tr>
             <tr>
             <td>xpath</td>
-            <td>{{serie.xpath}}</td>
+                <td>
+                <div ng-hide="editField[serie.name+'xpath']" ng-style="{width: '100%'}" ng-click="showEdit(serie, 'xpath')">{{serie.xpath}}</div>
+                <div ng-show="editField[serie.name+'xpath']"><input id = "serie.name+'xpath_edit'" type="text" ng-model="serie.xpath" ng-keyup="processKey($event, 'xpath')"/></div>
+                </td>
             </tr>
             <tr>
             <td>xpath_link</td>
-            <td>{{serie.xpath_link}}</td>
+                <td>
+                <div ng-hide="editField[serie.name+'xpath_link']" ng-style="{width: '100%'}" ng-click="showEdit(serie, 'xpath_link')">{{serie.xpath_link}}</div>
+                <div ng-show="editField[serie.name+'xpath_link']"><input id = "serie.name+'xpath_link_edit'" type="text" ng-model="serie.xpath_link" ng-keyup="processKey($event, 'xpath_link')"/></div>
+                </td>
             </tr>
             <tr>
             <td>xpath_title</td>
-            <td>{{serie.xpath_title}}</td>
+                <td>
+                <div ng-hide="editField[serie.name+'xpath_title']" ng-style="{width: '100%'}" ng-click="showEdit(serie, 'xpath_title')">{{serie.xpath_title}}</div>
+                <div ng-show="editField[serie.name+'xpath_title']"><input id = "serie.name+'xpath_title_edit'" type="text" ng-model="serie.xpath_title" ng-keyup="processKey($event, 'xpath_title')"/></div>
+                </td>
             </tr>
             <tr>
             <td>link_prefix</td>
-            <td>{{serie.link_prefix}}</td>
+                <td>
+                <div ng-hide="editField[serie.name+'link_prefix']" ng-style="{width: '100%'}" ng-click="showEdit(serie, 'link_prefix')">{{serie.link_prefix}}</div>
+                <div ng-show="editField[serie.name+'link_prefix']"><input id = "serie.name+'link_prefix_edit'" type="text" ng-model="serie.link_prefix" ng-keyup="processKey($event, 'link_prefix')"/></div>
+                </td>
             </tr>
             <tr>
             <td>link_mask</td>
-            <td>{{serie.link_mask}}</td>
+                <td>
+                <div ng-hide="editField[serie.name+'link_mask']" ng-style="{width: '100%'}" ng-click="showEdit(serie, 'link_mask')">{{serie.link_mask}}</div>
+                <div ng-show="editField[serie.name+'link_mask']"><input id = "serie.name+'link_mask_edit'" type="text" ng-model="serie.link_mask" ng-keyup="processKey($event, 'link_mask')"/></div>
+                </td>
             </tr>
             <tr>
             <td>file_mask</td>
-            <td>{{serie.file_mask}}</td>
+                <td>
+                <div ng-hide="editField[serie.name+'file_mask']" ng-style="{width: '100%'}" ng-click="showEdit(serie, 'file_mask')">{{serie.file_mask}}</div>
+                <div ng-show="editField[serie.name+'file_mask']"><input id = "serie.name+'file_mask_edit'" type="text" ng-model="serie.file_mask" ng-keyup="processKey($event, 'file_mask')"/></div>
+                </td>
             </tr>
             <tr>
             <td>title_mask</td>
-            <td>{{serie.title_mask}}</td>
+                <td>
+                <div ng-hide="editField[serie.name+'title_mask']" ng-style="{width: '100%'}" ng-click="showEdit(serie, 'title_mask')">{{serie.title_mask}}</div>
+                <div ng-show="editField[serie.name+'title_mask']"><input id = "serie.name+'title_mask_edit'" type="text" ng-model="serie.title_mask" ng-keyup="processKey($event, 'title_mask')"/></div>
+                </td>
             </tr>
         </tbody>
     </table>

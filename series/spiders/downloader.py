@@ -38,7 +38,7 @@ class DownloaderSpider(scrapy.Spider):
             file.close()
 
         for serie in self.series_data:
-            if (serie["enabled"] == "True"):
+            if (serie["enabled"] == True):
                 self.start_urls.append(serie["url"])
                 logger.debug("*** url %s added for processing ***", serie["url"])
 
