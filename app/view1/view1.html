@@ -43,7 +43,7 @@
             <tr>
             <td>Url</td>
                 <td>
-                <div ng-hide="editField[serie.name+'url']" ng-style="{width: '100%'}" ng-click="showEdit(serie, 'url')">{{serie.url}}</div>
+                <div ng-hide="editField[serie.name+'url']" ng-style="{width: '100%'}" ng-click="showEdit(serie, 'url')">{{serie.url}} [<a href="{{serie.url}}" target="_blank" ng-click="editField[serie.name+'url'] = false">GO</a>]</div>
                 <div ng-show="editField[serie.name+'url']"><input id = "serie.name+'url_edit'" type="text" ng-model="serie.url" ng-keyup="processKey($event, 'url')"/></div>
                 </td>
             </tr>
