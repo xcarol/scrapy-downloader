@@ -12,7 +12,7 @@
                 <button type="button" class="btn btn-danger" ng-click="confirmDelete(serie)">Delete</button>
             </div>
         </td>
-        <td valign="center"><h4>{{serie.name}}</h4></td>
+        <td valign="center"><h4><a href="{{serie.url}}" target="_blank">{{serie.name}}</a></h4></td>
         </tr>
         </thead>
         <tbody ng-show="serieVisible == serie">
@@ -20,22 +20,19 @@
             <td>Season</td>
             <td>
                 <div ng-hide="editField[serie.name+'season']" ng-style="{width: '100%'}" ng-click="showEdit(serie, 'season')">{{serie.season}}</div>
-                <div ng-show="editField[serie.name+'season']"><input id = "serie.name+'season_edit'" type="text" ng-model="serie.season" ng-keyup="processKey($event, 'season')"/></div>
+                <div ng-show="editField[serie.name+'season']"><input id = "serie.name+'season_edit'" type="number" ng-model="serie.season" ng-keyup="processKey($event, 'season')"/></div>
             </td>
             </tr>
             <tr>
             <td>Chapter</td>
             <td>
                 <div ng-hide="editField[serie.name+'chapter']" ng-style="{width: '100%'}" ng-click="showEdit(serie, 'chapter')">{{serie.chapter}}</div>
-                <div ng-show="editField[serie.name+'chapter']"><input id = "serie.name+'chapter_edit'" type="text" ng-model="serie.chapter" ng-keyup="processKey($event, 'chapter')"/></div>
+                <div ng-show="editField[serie.name+'chapter']"><input id = "serie.name+'chapter_edit'" type="number" ng-model="serie.chapter" ng-keyup="processKey($event, 'chapter')"/></div>
             </td>
             </tr>
             <tr>
             <td>Enabled</t>
                 <td>
-<!--
-                <div ng-hide="editField[serie.name+'enabled']" ng-style="{width: '100%'}" ng-click="showEdit(serie, 'enabled')">{{serie.enabled}}</div>
--->
                 <div><input id = "serie.name+'enabled_edit'" type="checkbox" ng-model="serie.enabled" ng-change="saveSerie();"/></div>
                 </td>
             </td>
@@ -43,7 +40,7 @@
             <tr>
             <td>Url</td>
                 <td>
-                <div ng-hide="editField[serie.name+'url']" ng-style="{width: '100%'}" ng-click="showEdit(serie, 'url')">{{serie.url}} [<a href="{{serie.url}}" target="_blank" ng-click="editField[serie.name+'url'] = false">GO</a>]</div>
+                <div ng-hide="editField[serie.name+'url']" ng-style="{width: '100%'}" ng-click="showEdit(serie, 'url')">{{serie.url}}</div>
                 <div ng-show="editField[serie.name+'url']"><input id = "serie.name+'url_edit'" type="text" ng-model="serie.url" ng-keyup="processKey($event, 'url')"/></div>
                 </td>
             </tr>
