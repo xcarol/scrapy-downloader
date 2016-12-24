@@ -15,6 +15,9 @@ angular.module('myApp.view1', ['ngRoute',
 
         $http.get('../series.json').success(function (data) {
             $scope.series = data;
+            $scope.series.sort(function(a, b) {
+                return a.name.localeCompare(b.name);
+            });
             $log.debug('$scope.series inside success = ' + $scope.series);
         });
 
