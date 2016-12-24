@@ -98,12 +98,12 @@ class DownloaderSpider(scrapy.Spider):
                 logger.debug("****     not found in %s", link)
                 continue
 
+            if ('link_prefix' in seriedata and len(seriedata["link_prefix"]) > 0 and link[0].find(seriedata["link_prefix"]) == -1):
+                link[0] = seriedata["link_prefix"] + link[0]
+
             #Prison break has malformed url. Check for a / at first position
             if (link[0][0] == '/'):
                 link[0] = link[0][1:]
-
-            if ('link_prefix' in seriedata and len(seriedata["link_prefix"]) > 0 and link[0].find(seriedata["link_prefix"]) == -1):
-                link[0] = seriedata["link_prefix"] + link[0]
 
             logger.debug("****** sending link %s to donwload", link)
 
