@@ -5,12 +5,10 @@ import json
 import logging
 import glob
 
-#Serie name in json series file MUST match directory in filesystem 
+#Serie name in json series file MUST match directory in filesystem
 dwnldir = "/home/kodi/Movies/"
 seriesdir = "/home/kodi/Series/"
 logger = logging.getLogger('downloader')
-
-# https://github.com/tranqil/utwhisper
 
 class DownloaderSpider(scrapy.Spider):
     name = "downloader"
@@ -83,6 +81,7 @@ class DownloaderSpider(scrapy.Spider):
         found = False
         for sel in response.xpath(seriedata["xpath"]):
 
+            logger.debug("-----somdins------")
             if ('xpath_title' in seriedata and len(seriedata["xpath_title"]) > 0):
 
                 title = sel.xpath(seriedata["xpath_title"]).extract()
@@ -101,16 +100,15 @@ class DownloaderSpider(scrapy.Spider):
             if ('link_prefix' in seriedata and len(seriedata["link_prefix"]) > 0 and link[0].find(seriedata["link_prefix"]) == -1):
                 link[0] = seriedata["link_prefix"] + link[0]
 
-            #Prison break has malformed url. Check for a / at first position
-            if (link[0][0] == '/'):
-                link[0] = link[0][1:]
-
             logger.debug("****** sending link %s to donwload", link)
 
-            scommand = 'python utwhisper/utwhisper.py --add-url '+link[0]
-            os.system(scommand)
-            found = True
-            break
+            scommand = 'wget \"'+link[0]+'\"'
+            res = os.system(scommand)
+            if (res == 0 ):
+                os.system("chmod 0777 *.torrent");
+                os.system("mv *.torrent /home/kodi/Baixades/");
+                found = True
+                break
 
         if (found):
             seriedata['chapter'] = nchapter
@@ -124,7 +122,7 @@ class DownloaderSpider(scrapy.Spider):
             logger.debug("**** searching for files to move using file_mask %s", file_mask)
 
             for nnchapter in range(1, nchapter):
-                
+
                 file_to_move = ""
 
                 sschapter = ''
